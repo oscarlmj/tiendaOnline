@@ -37,18 +37,11 @@ header li:hover{
     border-bottom: 2px solid black;
 }
 
-
-
-
 h3{
     border-bottom: 2px solid black;
     width: fit-content;
     background-color:burlywood;
     margin: 30px;
-}
-
-form{
-    
 }
 
 label, input{
