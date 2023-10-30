@@ -2,23 +2,23 @@
 ol{
     display: flex;
     list-style:none;
-    gap: 20px;
+    height: 100%;
+    margin: 0;
 }
-header li{
-    border: 2px solid black;
-    border-radius: 20px;
-    background-color: antiquewhite;
+
+header ol li{
     font-weight: bold;
-    height: fit-content;
-    margin-top:10px;
     text-align: center;
-    padding: 5px;
+    height: 100px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 header li:hover{
     background-color:honeydew;
 }
-
 
 body{
     padding: 0;
@@ -30,13 +30,6 @@ header{
     justify-content: center;
     background-color: antiquewhite;
     height: 100px;
-}
-
-h3{
-    border-bottom: 2px solid black;
-    width: fit-content;
-    background-color:burlywood;
-    margin: 30px;
 }
 
 form{
