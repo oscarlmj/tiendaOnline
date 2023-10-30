@@ -1,0 +1,49 @@
+
+ol{
+    display: flex;
+    list-style:none;
+    gap: 20px;
+}
+header li{
+    border: 2px solid black;
+    border-radius: 20px;
+    background-color: antiquewhite;
+    font-weight: bold;
+    height: fit-content;
+    margin-top:10px;
+    text-align: center;
+    padding: 5px;
+}
+
+header li:hover{
+    background-color:honeydew;
+}
+
+
+body{
+    padding: 0;
+    margin: 0;
+}
+
+header{
+    display: flex;
+    justify-content: center;
+    background-color: antiquewhite;
+    height: 100px;
+}
+
+h3{
+    border-bottom: 2px solid black;
+    width: fit-content;
+    background-color:burlywood;
+    margin: 30px;
+}
+
+form{
+    
+}
+
+label, input{
+    margin:10px;
+    font-weight: bold;
+}
