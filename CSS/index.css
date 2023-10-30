@@ -1,36 +1,44 @@
+body{
+    padding: 0;
+    margin: 0;
+    background-color: darkgrey;
+}
 
 ol{
     display: flex;
     list-style:none;
     gap: 20px;
-}
-header li{
-    border: 2px solid black;
-    border-radius: 20px;
-    background-color: antiquewhite;
-    font-weight: bold;
-    height: fit-content;
-    margin-top:10px;
-    text-align: center;
-    padding: 5px;
-}
-
-header li:hover{
-    background-color:honeydew;
-}
-
-
-body{
-    padding: 0;
     margin: 0;
+    padding: 0;
+
 }
 
 header{
     display: flex;
     justify-content: center;
-    background-color: antiquewhite;
+    background-color: black;
     height: 100px;
+    border-bottom: 2px solid greenyellow;
 }
+
+header li{
+    font-weight: bold;
+    height: 100%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    color: white;
+}
+
+header li:hover{
+    background-color:greenyellow;
+    color: black;
+    border-bottom: 2px solid black;
+}
+
+
+
 
 h3{
     border-bottom: 2px solid black;
