@@ -12,13 +12,13 @@
 </head>
 <body>
     <header>
-        <li>
-            <ol>Mostrar lista de productos</ol>
-            <ol>Crear producto</ol>
-            <ol>Consultar listado</ol>
-            <ol>Modificar producto</ol>
-            <ol>Eliminar producto</ol>
-        </li>
+        <ol>
+            <li>Mostrar lista de productos</li>
+            <li>Crear producto</li>
+            <li>Consultar listado</li>
+            <li>Modificar producto</li>
+            <li>Eliminar producto</li>
+        </ol>
     </header>
     <div id="opciones">
     </div>
