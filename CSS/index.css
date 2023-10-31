@@ -1,7 +1,13 @@
+body{
+    padding: 0;
+    margin: 0;
+    background-color: darkgrey;
+}
 
 ol{
     display: flex;
     list-style:none;
+<<<<<<< HEAD
     height: 100%;
     margin: 0;
 }
@@ -31,7 +37,12 @@ header li:hover{
 
 body{
     padding: 0;
+=======
+    gap: 20px;
+>>>>>>> 8421ee712e57b257358b7ee85cc9179fd79b2fc9
     margin: 0;
+    padding: 0;
+
 }
 
 header{
@@ -39,8 +50,35 @@ header{
     justify-content: center;
     background-color: black;
     height: 100px;
+    border-bottom: 2px solid greenyellow;
 }
 
+header li{
+    font-weight: bold;
+    height: 100%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    color: white;
+}
+
+header li:hover{
+    background-color:greenyellow;
+    color: black;
+    border-bottom: 2px solid black;
+}
+
+<<<<<<< HEAD
+=======
+h3{
+    border-bottom: 2px solid black;
+    width: fit-content;
+    background-color:burlywood;
+    margin: 30px;
+}
+
+>>>>>>> 8421ee712e57b257358b7ee85cc9179fd79b2fc9
 label, input{
     margin:10px;
     font-weight: bold;
