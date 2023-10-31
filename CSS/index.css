@@ -14,10 +14,19 @@ header ol li{
     display: flex;
     align-items: center;
     justify-content: center;
+    color: greenyellow;
 }
 
 header li:hover{
-    background-color:honeydew;
+    background-color:greenyellow;
+    color: black;
+    border-bottom: 3px black solid;
+}
+
+#fijado{
+    background-color:greenyellow;
+    color: black;
+    border-bottom: 3px black solid;
 }
 
 body{
@@ -28,15 +37,14 @@ body{
 header{
     display: flex;
     justify-content: center;
-    background-color: antiquewhite;
+    background-color: black;
     height: 100px;
-}
-
-form{
-    
 }
 
 label, input{
     margin:10px;
     font-weight: bold;
+}
+fieldset{
+    border-radius: 20px;
 }
