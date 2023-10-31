@@ -13,7 +13,7 @@
 <body>
     <header>
         <ol>
-            <li>Mostrar lista de productos</li>
+            <li id="fijado">Inicio</li>
             <li>Crear producto</li>
             <li>Consultar listado</li>
             <li>Modificar producto</li>
