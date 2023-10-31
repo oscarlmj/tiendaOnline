@@ -1,4 +1,19 @@
 <?php
+include("validacion.php");
+require("connect.php");
+
+
+
+$validacion=valida_nombre($_POST["nombre"]) && valida_precio($_POST["precio"])  && valida_imagen($$imagen=$_FILES["imagen"]['name']);
+
+if($validacion)
+{
+    $nombre=$_POST["nombre"];
+$precio=$_POST["precio"];
+$categoria=$_POST["categoria"];
+$imagen=$_FILES['imagen']['name'];
+    $insert="INSERT INTO productos(Nombre,Precio,Imagen,Categoría) VALUES ($nombre,$precio,$imagen;$categoria)";
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +44,7 @@
                 </label>
                 <label for="">
                     Precio
-                    <input type="text" name="nombre" id="nombre">
+                    <input type="text" name="precio" id="precio">
                 </label>
                 <label for="">
                     Imagen
@@ -37,7 +52,7 @@
                 </label>
                 <label for="">
                     Categoría
-                    <input type="text" name="nombre" id="nombre">
+                    <input type="text" name="categoria" id="categoria">
                 </label>
                 <input type="submit" value="Insertar">
             </form>
