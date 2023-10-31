@@ -9,16 +9,17 @@ function valida_nombre($nombre){
 }
 
 function valida_precio($precio){
-    if($numero.is_integer)
+    if($precio>0)
     return true;
     else
     return false;
 }
 
 function valida_imagen($imagen){
+    $formatos = array("jpg", "gif", "png");
     $regex_formato = "#^.+\.(".implode('|', $formatos).")$#";
 
-    if(preg_match($regex_formato, $_FILE["archivo"]["name"]))
+    if(preg_match($regex_formato, $_FILES["imagen"]['name']))
     return true;
     else
     return false;
