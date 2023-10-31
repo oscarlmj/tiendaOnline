@@ -1,5 +1,4 @@
 <?php
-require("C:/xampp/htdocs/tiendaOnline/connect.php");
 ?>
 
 <!DOCTYPE html>
@@ -23,23 +22,24 @@ require("C:/xampp/htdocs/tiendaOnline/connect.php");
     <div id="opciones">
         <fieldset>
             <legend>Datos del prodcuto</legend>
-            <form action="crear_producto.php">
+            <form action="crear_producto.php" method="POST" enctype="multipart/form-data">
                 <label for="">
                     Nombre
                     <input type="text" name="nombre" id="nombre">
                 </label>
                 <label for="">
                     Precio
-                    <input type="text" name="precio" id="precio">
+                    <input type="text" name="nombre" id="nombre">
                 </label>
                 <label for="">
                     Imagen
                     <input type="file" name="imagen" id="imagen">
                 </label>
                 <label for="">
-                    Categoria
-                    <input type="text" name="categoria" id="categoria">
+                    Categoría
+                    <input type="text" name="nombre" id="nombre">
                 </label>
+                <input type="submit" value="Insertar">
             </form>
         </fieldset>
     </div>
