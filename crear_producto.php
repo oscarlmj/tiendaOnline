@@ -14,14 +14,14 @@ require("connect.php");
         $validacion=valida_nombre($nombre);
         if($validacion)
         {
-                try{
-                    $sql = "INSERT INTO productos (Nombre, Precio, Imagen, Categoría) VALUES ('$nombre', '$precio', '$imagen', '$categoria')";
-                    // usar exec() porque no devuelva resultados
-                    $conn->exec($sql);
-                    echo "Nuevo registro creado con éxito";
-                    $conn = null;
-                }
-                catch(PDOException $e){
+            try{
+                $sql = "INSERT INTO productos (Nombre, Precio, Imagen, Categoría) VALUES ('$nombre', '$precio', '$imagen', '$categoria')";
+                // usar exec() porque no devuelva resultados
+                $conn->exec($sql);
+                //En caso de inserción, redirige al usuario a la pagina principal donde vera el producto añadido.
+                header( 'Location: ./index.php' ) ;
+            }
+            catch(PDOException $e){
                 echo $sql . "<br>" . $e -> getMessage();
             }
         }
@@ -49,7 +49,7 @@ require("connect.php");
     <div id="opciones">
         <fieldset>
             <legend>Datos del prodcuto</legend>
-            <form action="crear_producto.php" method="POST" enctype="multipart/form-data" name="form">
+            <form action="crear_producto.php" method="POST" enctype="multipart/form-data" name="form" autocomplete="off">
                 <label for="">
                     Nombre
                     <input type="text" name="nombre" id="nombre">
