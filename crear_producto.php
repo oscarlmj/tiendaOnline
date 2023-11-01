@@ -2,18 +2,30 @@
 include("validacion.php");
 require("connect.php");
 
+// Revisa la conexión a la base de datos
+    if(isset($_POST['nombre']) && isset($_POST['precio']) && isset($_FILES['imagen']['name']) && !empty($_POST['categoria'])) {
 
-
-$validacion=valida_nombre($_POST["nombre"]) && valida_precio($_POST["precio"])  && valida_imagen($$imagen=$_FILES["imagen"]['name']);
-
-if($validacion)
-{
-    $nombre=$_POST["nombre"];
-$precio=$_POST["precio"];
-$categoria=$_POST["categoria"];
-$imagen=$_FILES['imagen']['name'];
-    $insert="INSERT INTO productos(Nombre,Precio,Imagen,Categoría) VALUES ($nombre,$precio,$imagen;$categoria)";
-}
+        $nombre = $_POST['nombre'];
+        $precio = $_POST['precio'];
+        $imagen = $_FILES['imagen']['name'];
+        $categoria = $_POST['categoria'];
+    
+        
+        $validacion=valida_nombre($nombre);
+        if($validacion)
+        {
+                try{
+                    $sql = "INSERT INTO productos (Nombre, Precio, Imagen, Categoría) VALUES ('$nombre', '$precio', '$imagen', '$categoria')";
+                    // usar exec() porque no devuelva resultados
+                    $conn->exec($sql);
+                    echo "Nuevo registro creado con éxito";
+                    $conn = null;
+                }
+                catch(PDOException $e){
+                echo $sql . "<br>" . $e -> getMessage();
+            }
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +49,7 @@ $imagen=$_FILES['imagen']['name'];
     <div id="opciones">
         <fieldset>
             <legend>Datos del prodcuto</legend>
-            <form action="crear_producto.php" method="POST" enctype="multipart/form-data">
+            <form action="crear_producto.php" method="POST" enctype="multipart/form-data" name="form">
                 <label for="">
                     Nombre
                     <input type="text" name="nombre" id="nombre">
@@ -51,10 +63,13 @@ $imagen=$_FILES['imagen']['name'];
                     <input type="file" name="imagen" id="imagen">
                 </label>
                 <label for="">
-                    Categoría
-                    <input type="text" name="categoria" id="categoria">
+                    <select name="categoria" id="categoria">
+                        <option value="1">Componentes</option>
+                        <option value="2">Perifericos</option>
+                        <option value="3">Portatiles</option>
+                    </select>
                 </label>
-                <input type="submit" value="Insertar">
+                <input type="submit" name="submit" value="Insertar">
             </form>
         </fieldset>
     </div>
