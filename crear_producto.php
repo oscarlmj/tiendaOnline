@@ -1,27 +1,33 @@
 <?php
+//Incluye el archivo donde se realizan las validacion, e indica que requiere del archivo de conexion para poder ejecutarse.
 include("validacion.php");
 require("connect.php");
 
-// Revisa la conexión a la base de datos
+//Comprueba que todos los campos del formulario esten rellenados.
     if(isset($_POST['nombre']) && isset($_POST['precio']) && isset($_FILES['imagen']['name']) && !empty($_POST['categoria'])) {
 
+        //Crea las variables con los valores de cada campo del form.
         $nombre = $_POST['nombre'];
         $precio = $_POST['precio'];
         $imagen = $_FILES['imagen']['name'];
         $categoria = $_POST['categoria'];
     
-        
+        //Realiza las validaciones de los campos del form.
         $validacion=valida_nombre($nombre);
+
+        //En caso de ser true la validacion, realiza las acciones indicadas.
         if($validacion)
         {
             try{
+                //Almacena en la variable la sentencia SQL a ejecutar.
                 $sql = "INSERT INTO productos (Nombre, Precio, Imagen, Categoría) VALUES ('$nombre', '$precio', '$imagen', '$categoria')";
-                // usar exec() porque no devuelva resultados
+                //Realiza la sentencia.
                 $conn->exec($sql);
                 //En caso de inserción, redirige al usuario a la pagina principal donde vera el producto añadido.
                 header( 'Location: ./index.php' ) ;
             }
             catch(PDOException $e){
+                //En caso de fallo muestra el error.
                 echo $sql . "<br>" . $e -> getMessage();
             }
         }
