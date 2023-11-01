@@ -1,5 +1,14 @@
 <?php
+require("./connect.php");
 
+try {
+    $consulta = $conn->prepare("SELECT * FROM productos");
+    $consulta->execute();
+    $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Error al recuperar los datos: " . $e->getMessage();
+    die();
+}
 ?>
 
 <!DOCTYPE html>
@@ -13,14 +22,44 @@
 <body>
     <header>
         <ol>
-            <li>Mostrar lista de productos</li>
+            <li id="fijado">Mostrar lista de productos</li>
             <li>Crear producto</li>
             <li>Consultar listado</li>
             <li>Modificar producto</li>
             <li>Eliminar producto</li>
         </ol>
     </header>
-    <div id="opciones">
+    <div id="contenido">
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Imagen</th>
+            <th>Categoría</th>
+            <!-- Agrega más encabezados de columnas según tu tabla -->
+        </tr>
+        <?php foreach ($resultados as $fila) { ?>
+            <tr>
+                <td><?php echo $fila['id']; ?></td>
+                <td><?php echo $fila['Nombre']; ?></td>
+                <td><?php echo $fila['Precio']; ?></td>
+                <td><?php echo $fila['Imagen']; ?></td>
+                <td><?php switch($fila['Categoría'])
+                {
+                    case 1:
+                        echo 'Componentes';
+                        break;
+                    case 2:
+                        echo 'Perifericos';
+                        break;
+                    case 3:
+                        echo 'Videojuegos';
+                        break;
+                } ?></td>
+            </tr>
+        <?php } ?>
+    </table>
     </div>
 </body>
 </html>
