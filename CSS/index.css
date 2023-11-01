@@ -40,7 +40,6 @@ body{
     gap: 20px;
     margin: 0;
     padding: 0;
-
 }
 
 header{
@@ -59,6 +58,7 @@ header li{
     align-items: center;
     display: flex;
     color: white;
+    
 }
 
 header li:hover{
@@ -95,4 +95,22 @@ label, input{
 }
 fieldset{
     border-radius: 20px;
+}
+
+#contenido{
+    display:flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+
+
+#fijado{
+    background-color: greenyellow;
+    color: black;
+    border-bottom: 2px solid black;
+}
+
+a{
+    text-decoration: none;
 }
