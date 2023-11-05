@@ -3,6 +3,15 @@
 include("validacion.php");
 require("connect.php");
 
+try{
+    $consulta = $conn->prepare("SELECT * FROM `categorías`");
+    $consulta->execute();
+    $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e){
+    echo "Error al recuperar los datos: " . $e->getMessage();
+    die();
+}
+
 //Comprueba que todos los campos del formulario esten rellenados.
     if(isset($_POST['nombre']) && isset($_POST['precio']) && isset($_FILES['imagen']['name']) && !empty($_POST['categoria'])) {
 
@@ -12,6 +21,7 @@ require("connect.php");
         $imagen = $_FILES['imagen']['name'];
         $categoria = $_POST['categoria'];
     
+
         //Realiza las validaciones de los campos del form.
         $validacion=valida_nombre($nombre);
 
@@ -70,9 +80,9 @@ require("connect.php");
                 </label>
                 <label for="">
                     <select name="categoria" id="categoria">
-                        <option value="1">Componentes</option>
-                        <option value="2">Perifericos</option>
-                        <option value="3">Portatiles</option>
+                    <?php foreach ($resultados as $cat) { ?>
+                        <?php echo "<option value='1'>{$cat['Nombre']}</option>"; ?>
+                    <?php } ?>
                     </select>
                 </label>
                 <input type="submit" name="submit" value="Insertar">
