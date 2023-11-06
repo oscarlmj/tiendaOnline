@@ -1,7 +1,7 @@
 body{
     padding: 0;
     margin: 0;
-    background-color: darkgrey;
+    background-color: #7E7E8C;
 }
 
 ol{
@@ -19,35 +19,27 @@ header ol li{
     display: flex;
     align-items: center;
     justify-content: center;
-    color: greenyellow;
+    color: #A4A4AD;
 }
 
 header li:hover{
-    background-color:greenyellow;
-    color: black;
-    border-bottom: 3px black solid;
+    background-color:#A4A4AD;
+    color: #272735;
+    border-bottom: 3px solid #666f88;
 }
 
 #fijado{
-    background-color:greenyellow;
-    color: black;
-    border-bottom: 3px black solid;
-}
-
-body{
-    padding: 0;
-    gap: 20px;
-    gap: 20px;
-    margin: 0;
-    padding: 0;
+    background-color:#A4A4AD;
+    color: #272735;
+    border-bottom: 3px solid #666f88;
 }
 
 header{
     display: flex;
     justify-content: center;
-    background-color: black;
+    background-color: #272735;
     height: 100px;
-    border-bottom: 2px solid greenyellow;
+    border-bottom: 2px solid #474759;
 }
 
 header li{
@@ -61,54 +53,44 @@ header li{
     
 }
 
-header li:hover{
-    background-color:greenyellow;
-    color: black;
-    border-bottom: 2px solid black;
-}
-
-header li{
-    font-weight: bold;
-    height: 100%;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    color: white;
-}
-
-header li:hover{
-    background-color:greenyellow;
-    color: black;
-    border-bottom: 2px solid black;
-}
-h3{
-    border-bottom: 2px solid black;
-    width: fit-content;
-    background-color:burlywood;
-    margin: 30px;
-}
-
-label, input{
+label, input, select{
     margin:10px;
     font-weight: bold;
 }
-fieldset{
-    border-radius: 20px;
+
+form{
+    border: 0px;
+    border-radius: 24px;
+    border-top-left-radius: 0px;
+    width: 50%;
+    margin-top: 50px;
+    border-radius: 24px;
+    border-top-left-radius: 0px;
+    padding: 9px;
+    background-color: #616172;
+}
+
+#opciones{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#opciones fieldset{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 2px solid black; 
+    border-radius: 16px;
+    border-top-left-radius: 0px;
+
 }
 
 #contenido{
     display:flex;
     justify-content: center;
     margin-top: 50px;
-}
-
-
-
-#fijado{
-    background-color: greenyellow;
-    color: black;
-    border-bottom: 2px solid black;
 }
 
 a{
