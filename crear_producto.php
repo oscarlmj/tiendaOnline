@@ -80,9 +80,9 @@ try{
                 </label>
                 <label for="">
                     <select name="categoria" id="categoria">
-                    <?php foreach ($resultados as $cat) { ?>
-                        <?php echo "<option value='1'>{$cat['Nombre']}</option>"; ?>
-                    <?php } ?>
+                    <?php foreach ($resultados as $cat) {
+                        echo "<option value={$cat['Id']}>{$cat['Nombre']}</option>";
+                    }?>
                     </select>
                 </label>
                 <input type="submit" name="submit" value="Insertar">
