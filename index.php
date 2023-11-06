@@ -22,9 +22,8 @@ try {
 <body>
     <header>
         <ol>
-            <li id="fijado">Mostrar lista de productos</li>
+            <li id="fijado">Consultar listado</li>
             <a href="./crear_producto.php"><li>Crear producto</li></a>
-            <li>Consultar listado</li>
             <li>Modificar producto</li>
             <li>Eliminar producto</li>
         </ol>
