@@ -1,6 +1,7 @@
 <?php
 require("./connect.php");
 
+//Consulta para mostrar los datos de la base de datos en una tabla.
 try {
     $consulta = $conn->prepare("SELECT * FROM productos");
     $consulta->execute();
@@ -36,15 +37,17 @@ try {
             <th>Precio</th>
             <th>Imagen</th>
             <th>Categoría</th>
-            <!-- Agrega más encabezados de columnas según tu tabla -->
         </tr>
-        <?php foreach ($resultados as $fila) { ?>
-            <tr>
-                <td><?php echo $fila['id']; ?></td>
-                <td><?php echo $fila['Nombre']; ?></td>
-                <td><?php echo $fila['Precio']; ?></td>
-                <td><?php echo $fila['Imagen']; ?></td>
-                <td><?php switch($fila['Categoría'])
+        <!-- Recorre cada elemento de la BBDD para mostrar toda la informacion en la tabla -->
+        <?php foreach ($resultados as $fila) {
+            echo"<tr>";
+                echo"<td>{$fila['id']}</td>";
+                echo"<td>{$fila['Nombre']}</td>";
+                echo"<td>{$fila['Precio']}</td>";
+                echo"<td>{$fila['Imagen']}</td>";
+                echo"<td>";
+                //Dependiendo del ID de la categoría, muestra el nombre.
+                switch($fila['Categoría'])
                 {
                     case 1:
                         echo 'Componentes';
@@ -55,9 +58,10 @@ try {
                     case 3:
                         echo 'Videojuegos';
                         break;
-                } ?></td>
-            </tr>
-        <?php } ?>
+                }
+                echo"</td>";
+            echo"</tr>";
+        }?>
     </table>
     </div>
 </body>
