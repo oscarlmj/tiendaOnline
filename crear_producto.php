@@ -34,7 +34,7 @@ try{
                 //Realiza la sentencia.
                 $conn->exec($sql);
                 //En caso de inserción, redirige al usuario a la pagina principal donde vera el producto añadido.
-                header( 'Location: ./index.php' ) ;
+                header('Location: ./index.php');
             }
             catch(PDOException $e){
                 //En caso de fallo muestra el error.
@@ -62,9 +62,9 @@ try{
         </ol>
     </header>
     <div id="opciones">
-        <fieldset>
-            <legend>Datos del prodcuto</legend>
             <form action="crear_producto.php" method="POST" enctype="multipart/form-data" name="form" autocomplete="off">
+            <fieldset>
+            <legend>Datos del prodcuto</legend>
                 <label for="">
                     Nombre
                     <input type="text" name="nombre" id="nombre">
@@ -78,6 +78,7 @@ try{
                     <input type="file" name="imagen" id="imagen">
                 </label>
                 <label for="">
+                    Categoría
                     <select name="categoria" id="categoria">
                     <?php foreach ($resultados as $cat) {
                         echo "<option value={$cat['Id']}>{$cat['Nombre']}</option>";
@@ -85,8 +86,8 @@ try{
                     </select>
                 </label>
                 <input type="submit" name="submit" value="Insertar">
+            </fieldset>
             </form>
-        </fieldset>
     </div>
 </body>
 </html>
