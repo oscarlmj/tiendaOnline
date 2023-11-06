@@ -55,9 +55,8 @@ try{
 <body>
     <header>
         <ol>
-            <a href="./index.php"><li>Mostrar lista de productos</li></a>
+            <a href="./index.php"><li>Consultar listado</li></a>
             <li id="fijado">Crear producto</li>
-            <li>Consultar listado</li>
             <li>Modificar producto</li>
             <li>Eliminar producto</li>
         </ol>
