@@ -96,3 +96,16 @@ form{
 a{
     text-decoration: none;
 }
+td{
+    border-bottom: 2px solid black;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+th{
+    font-size: x-large;
+}
+
+table{
+    border-spacing: 30px;
+}
