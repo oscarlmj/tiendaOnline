@@ -1,6 +1,7 @@
 <?php
 require("./connect.php");
 
+$directorio="./img/";
 //Consulta para mostrar los datos de la base de datos en una tabla.
 try {
     $consulta = $conn->prepare("SELECT * FROM productos");
@@ -45,7 +46,7 @@ try {
                 echo"<td>{$fila['Nombre']}</td>";
                 echo"<td>{$fila['Precio']}</td>";
                 echo"<td>{$fila['Imagen']}</td>";
-                echo"<td>";
+                echo '<td><img src="' . $directorio . $fila['Imagen'] . '"></td>';
                 //Dependiendo del ID de la categoría, muestra el nombre.
                 switch($fila['Categoría'])
                 {
