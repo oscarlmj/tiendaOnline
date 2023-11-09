@@ -2,6 +2,9 @@
 //Incluye el archivo donde se realizan las validacion, e indica que requiere del archivo de conexion para poder ejecutarse.
 include("validacion.php");
 require("connect.php");
+//Indica el destino de las imagenes subidas.
+$destino="./img/";
+opendir($destino);
 
 try{
     $consulta = $conn->prepare("SELECT * FROM `categorías`");
@@ -18,9 +21,12 @@ try{
         //Crea las variables con los valores de cada campo del form.
         $nombre = $_POST['nombre'];
         $precio = $_POST['precio'];
-        $imagen = $_FILES['imagen']['name'];
+        $imagen =$destino.$_FILES['imagen']['name'];
         $categoria = $_POST['categoria'];
-    
+
+        //Almacena en variables el nombre y el nombre temporal de la imagen.
+        $imagen_nombre = $_FILES['imagen']['name'];
+        $imagen_temporal = $_FILES['imagen']['tmp_name'];
 
         //Realiza las validaciones de los campos del form.
         $validacion=valida_nombre($nombre);
@@ -29,10 +35,15 @@ try{
         if($validacion)
         {
             try{
+
+                $ruta_imagen = $destino . $imagen_nombre;
                 //Almacena en la variable la sentencia SQL a ejecutar.
                 $sql = "INSERT INTO productos (Nombre, Precio, Imagen, Categoría) VALUES ('$nombre', '$precio', '$imagen', '$categoria')";
                 //Realiza la sentencia.
                 $conn->exec($sql);
+
+                //Mueve la imagen al directorio.
+                move_uploaded_file($imagen_temporal, $destino . $imagen_nombre);                
                 //En caso de inserción, redirige al usuario a la pagina principal donde vera el producto añadido.
                 header('Location: ./index.php');
             }
