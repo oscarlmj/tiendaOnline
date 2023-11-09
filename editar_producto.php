@@ -15,6 +15,18 @@ try{
     die();
 }
 
+try{
+    $id=$_GET['id'];
+    $consulta = $conn->prepare("SELECT * FROM `productos` WHERE id = $id");   
+    $consulta->execute();
+    $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
+    $campos=$resultado[0];
+} catch (PDOException $e){
+    echo "Error al recuperar los datos: " . $e->getMessage();
+    die();
+}
+
+
 //Comprueba que todos los campos del formulario esten rellenados.
     if(isset($_POST['nombre']) && isset($_POST['precio']) && isset($_FILES['imagen']['name']) && !empty($_POST['categoria'])) {
 
@@ -78,11 +90,11 @@ try{
             <legend>Datos para modificar</legend>
                 <label for="">
                     Nombre
-                    <input type="text" name="nombre" id="nombre">
+                    <input type="text" name="nombre" id="nombre" value=<?php echo $campos['Nombre']?>>
                 </label>
                 <label for="">
                     Precio
-                    <input type="text" name="precio" id="precio">
+                    <input type="text" name="precio" id="precio" value=<?php echo $campos['Precio']?>>
                 </label>
                 <label for="">
                     Imagen
@@ -92,11 +104,15 @@ try{
                     Categoría
                     <select name="categoria" id="categoria">
                     <?php foreach ($resultados as $cat) {
+                        
+                        if($cat['Nombre']==$campos['Categoría'])
+                        echo "<option value={$cat['Id']} selected>{$cat['Nombre']}</option>";
+                        else
                         echo "<option value={$cat['Id']}>{$cat['Nombre']}</option>";
                     }?>
                     </select>
                 </label>
-                <input type="submit" name="submit" value="Modificar">
+                <input type="submit" name="submit" value="Modificar">   
             </fieldset>
             </form>
     </div>
