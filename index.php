@@ -26,7 +26,7 @@ try {
         <ol>
             <li id="fijado">Consultar listado</li>
             <a href="./crear_producto.php"><li>Crear producto</li></a>
-            <li>Modificar producto</li>
+            <a href="./editar_producto.php"><li>Editar producto</li></a>
             <li>Eliminar producto</li>
         </ol>
     </header>

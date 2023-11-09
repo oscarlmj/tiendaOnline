@@ -68,7 +68,7 @@ try{
         <ol>
             <a href="./index.php"><li>Consultar listado</li></a>
             <li id="fijado">Crear producto</li>
-            <li>Modificar producto</li>
+            <a href="./editar_producto.php"><li>Editar producto</li></a>
             <li>Eliminar producto</li>
         </ol>
     </header>
