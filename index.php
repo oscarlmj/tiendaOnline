@@ -63,6 +63,7 @@ try {
                         break;
                 }
                 echo"</td>";
+                echo"<td><a href='./editar_producto.php'><img src='./img/edit.png' width=25px></td>";
             echo"</tr>";
         }?>
     </table>
