@@ -5,7 +5,9 @@ require("connect.php");
 //Indica el destino de las imagenes subidas.
 $destino="./img/";
 opendir($destino);
+$id=$_GET['id'];
 
+// Recoge el valor de las categorías para mostrarlas en el desplegable.
 try{
     $consulta = $conn->prepare("SELECT * FROM `categorías`");
     $consulta->execute();
@@ -15,9 +17,9 @@ try{
     die();
 }
 
+//Recoge los datos del producto a modificar.
 try{
-    $id=$_GET['id'];
-    $consulta = $conn->prepare("SELECT * FROM `productos` WHERE id = $id");   
+    $consulta = $conn->prepare("SELECT * FROM `productos` WHERE id = $id");
     $consulta->execute();
     $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
     $campos=$resultado[0];
@@ -26,19 +28,16 @@ try{
     die();
 }
 
-
 //Comprueba que todos los campos del formulario esten rellenados.
-    if(isset($_POST['nombre']) && isset($_POST['precio']) && isset($_FILES['imagen']['name']) && !empty($_POST['categoria'])) {
+    if(isset($_POST['nombre']) && isset($_POST['precio']) && !empty($_POST['categoria'])) {
 
         //Crea las variables con los valores de cada campo del form.
         $nombre = $_POST['nombre'];
         $precio = $_POST['precio'];
-        $imagen =$destino.$_FILES['imagen']['name'];
         $categoria = $_POST['categoria'];
 
         //Almacena en variables el nombre y el nombre temporal de la imagen.
-        $imagen_nombre = $_FILES['imagen']['name'];
-        $imagen_temporal = $_FILES['imagen']['tmp_name'];
+        
 
         //Realiza las validaciones de los campos del form.
         $validacion=valida_nombre($nombre);
@@ -47,17 +46,30 @@ try{
         if($validacion)
         {
             try{
+                if(isset($_FILES['imagen']['name']))
+                {
+                    
+                    $imagen_nombre = $_FILES['imagen']['name'];
+                    $imagen_temporal = $_FILES['imagen']['tmp_name'];
+                    $ruta_imagen = $destino . $imagen_nombre;
+                    move_uploaded_file($imagen_temporal, $destino . $imagen_nombre);
 
-                $ruta_imagen = $destino . $imagen_nombre;
-                //Almacena en la variable la sentencia SQL a ejecutar.
-                $sql = "INSERT INTO productos (Nombre, Precio, Imagen, Categoría) VALUES ('$nombre', '$precio', '$imagen', '$categoria')";
-                //Realiza la sentencia.
-                $conn->exec($sql);
-
+                    //Almacena en la variable la sentencia SQL a ejecutar.
+                    $sql = "UPDATE `productos` SET `Precio` = '$precio', `Categoría` = '$categoria', `Imagen` = '$ruta_imagen', `Nombre` = '$nombre' WHERE `productos`.`id` = '$id'";
+                    //Realiza la sentencia.
+                        $conn->exec($sql);
+                        header('Location: ./index.php');                
+                }
+                else
+                {
+                    //Almacena en la variable la sentencia SQL a ejecutar.
+                    $sql = "UPDATE `productos` SET  `Nombre` = '$nombre', `Precio` = '$precio', `Categoría` = '$categoria' WHERE `productos`.`id` = '$id'";
+                    //Realiza la sentencia.
+                        $conn->exec($sql);
+                        header('Location: ./index.php');                
+                }
                 //Mueve la imagen al directorio.
-                move_uploaded_file($imagen_temporal, $destino . $imagen_nombre);                
                 //En caso de inserción, redirige al usuario a la pagina principal donde vera el producto añadido.
-                header('Location: ./index.php');
             }
             catch(PDOException $e){
                 //En caso de fallo muestra el error.
@@ -85,8 +97,8 @@ try{
         </ol>
     </header>
     <div id="opciones">
-            <form action="editar_producto.php" method="GET" enctype="multipart/form-data" name="form" autocomplete="off">
-            <fieldset>
+        <form action="editar_producto.php?id=<?php echo $id; ?>" method="POST" enctype="multipart/form-data" name="form" autocomplete="off">            
+        <fieldset>
             <legend>Datos para modificar</legend>
                 <label for="">
                     Nombre
@@ -98,14 +110,14 @@ try{
                 </label>
                 <label for="">
                     Imagen
-                    <input type="file" name="imagen" id="imagen">
+                    <input type="file" name="imagen" id="imagen" src=<?php echo $campos['Imagen']?>>
                 </label>
                 <label for="">
                     Categoría
                     <select name="categoria" id="categoria">
                     <?php foreach ($resultados as $cat) {
                         
-                        if($cat['Nombre']==$campos['Categoría'])
+                        if($cat['Id']==$campos['Categoría'])
                         echo "<option value={$cat['Id']} selected>{$cat['Nombre']}</option>";
                         else
                         echo "<option value={$cat['Id']}>{$cat['Nombre']}</option>";
