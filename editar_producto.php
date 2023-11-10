@@ -108,7 +108,7 @@ try{
                 </label>
                 <label for="">
                     Imagen
-                    <input type="file" name="imagen" id="imagen" src=<?php echo $campos['Imagen']?>>
+                    <input type="file" name="imagen" id="imagen">
                 </label>
                 <label for="">
                     Categoría
