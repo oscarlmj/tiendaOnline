@@ -59,7 +59,7 @@ try {
                         echo 'Perifericos';
                         break;
                     case 3:
-                        echo 'Videojuegos';
+                        echo 'Portatiles';
                         break;
                 }
                 echo"</td>";
