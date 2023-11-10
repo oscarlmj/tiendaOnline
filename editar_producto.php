@@ -7,18 +7,15 @@ $destino="./img/";
 opendir($destino);
 $id=$_GET['id'];
 
-// Recoge el valor de las categorías para mostrarlas en el desplegable.
+
+//Recoge los datos del producto a modificar, y muestrael desplegable con las categorias.
 try{
+    //Consulta para las categorias.
     $consulta = $conn->prepare("SELECT * FROM `categorías`");
     $consulta->execute();
     $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e){
-    echo "Error al recuperar los datos: " . $e->getMessage();
-    die();
-}
 
-//Recoge los datos del producto a modificar.
-try{
+    //Consulta para mostrar los datos del producto.
     $consulta = $conn->prepare("SELECT * FROM `productos` WHERE id = $id");
     $consulta->execute();
     $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
@@ -36,9 +33,6 @@ try{
         $precio = $_POST['precio'];
         $categoria = $_POST['categoria'];
 
-        //Almacena en variables el nombre y el nombre temporal de la imagen.
-        
-
         //Realiza las validaciones de los campos del form.
         $validacion=valida_nombre($nombre);
 
@@ -48,28 +42,32 @@ try{
             try{
                 if(isset($_FILES['imagen']['name']))
                 {
-                    
+                    //Almacena en variables el nombre y el nombre temporal de la imagen.
                     $imagen_nombre = $_FILES['imagen']['name'];
-                    $imagen_temporal = $_FILES['imagen']['tmp_name'];
+                    $nombre_temporal = $_FILES['imagen']['tmp_name'];
+                    //Concatena el nombre de la imagen con la ruta para usarlo en el index.php para mostrar la imagen.
                     $ruta_imagen = $destino . $imagen_nombre;
-                    move_uploaded_file($imagen_temporal, $destino . $imagen_nombre);
+                    //Mueve la imagen al directorio.
+                    move_uploaded_file($nombre_temporal, $ruta_imagen);
 
                     //Almacena en la variable la sentencia SQL a ejecutar.
                     $sql = "UPDATE `productos` SET `Precio` = '$precio', `Categoría` = '$categoria', `Imagen` = '$ruta_imagen', `Nombre` = '$nombre' WHERE `productos`.`id` = '$id'";
-                    //Realiza la sentencia.
-                        $conn->exec($sql);
-                        header('Location: ./index.php');                
+
+                    //Ejecuta la sentencia.
+                    $conn->exec($sql);
+                    //Redirige al usuario al index.php para evitar que al actualizar la página inserte de nuevo los datos almacenados en la caché-
+                    header('Location: ./index.php');                
                 }
                 else
                 {
                     //Almacena en la variable la sentencia SQL a ejecutar.
                     $sql = "UPDATE `productos` SET  `Nombre` = '$nombre', `Precio` = '$precio', `Categoría` = '$categoria' WHERE `productos`.`id` = '$id'";
-                    //Realiza la sentencia.
-                        $conn->exec($sql);
-                        header('Location: ./index.php');                
+
+                    //Ejecuta la sentencia.
+                    $conn->exec($sql);
+                    //Redirige al usuario al index.php para evitar que al actualizar la página inserte de nuevo los datos almacenados en la caché-
+                    header('Location: ./index.php');                
                 }
-                //Mueve la imagen al directorio.
-                //En caso de inserción, redirige al usuario a la pagina principal donde vera el producto añadido.
             }
             catch(PDOException $e){
                 //En caso de fallo muestra el error.
@@ -116,7 +114,6 @@ try{
                     Categoría
                     <select name="categoria" id="categoria">
                     <?php foreach ($resultados as $cat) {
-                        
                         if($cat['Id']==$campos['Categoría'])
                         echo "<option value={$cat['Id']} selected>{$cat['Nombre']}</option>";
                         else
