@@ -1,4 +1,5 @@
 <?php
+include("nav.php");
 //Incluye el archivo donde se realizan las validacion, e indica que requiere del archivo de conexion para poder ejecutarse.
 include("validacion.php");
 require("connect.php");
@@ -45,7 +46,7 @@ try{
                 //Mueve la imagen al directorio.
                 move_uploaded_file($imagen_temporal, $destino . $imagen_nombre);                
                 //En caso de inserción, redirige al usuario a la pagina principal donde vera el producto añadido.
-                header('Location: ./index.php');
+                header('Location: ./listar_productos.php');
             }
             catch(PDOException $e){
                 //En caso de fallo muestra el error.
@@ -64,14 +65,6 @@ try{
     <link rel="stylesheet" href="./CSS/index.css">
 </head>
 <body>
-    <header>
-        <ol>
-            <a href="./index.php"><li>Consultar listado</li></a>
-            <li id="fijado">Crear producto</li>
-            <a href="./editar_producto.php"><li>Editar producto</li></a>
-            <li>Eliminar producto</li>
-        </ol>
-    </header>
     <div id="opciones">
             <form action="crear_producto.php" method="POST" enctype="multipart/form-data" name="form" autocomplete="off">
             <fieldset>

@@ -1,6 +1,7 @@
 <?php
 //Incluye los archivos para realizar las validaciones y conectarse a la bbdd.
 include("validacion.php");
+include("nav.php");
 require("connect.php");
 
 //Establece el directorio para almacenar las imagenes.
@@ -63,7 +64,7 @@ if(!empty($_GET))
                 $conn->exec($sql);
 
                 //Redirige al usuario al index.php, para evitar que al refrescar la pagina inserte de nuevo los datos en la BBDD, ya que se almacenan en la caché.
-                header('Location: ./index.php');
+                header('Location: ./listar_productos.php');
             }
             catch (PDOException $e) {
                 echo $sql . "<br>" . $e->getMessage();
@@ -83,14 +84,6 @@ if(!empty($_GET))
     <link rel="stylesheet" href="./CSS/index.css">
 </head>
 <body>
-    <header>
-        <ol>
-            <a href="./index.php"><li>Consultar listado</li></a>
-            <a href="./crear_producto.php"><li>Crear producto</li></a>
-            <li  id="fijado">Editar producto</li>
-            <li>Eliminar producto</li>
-        </ol>
-    </header>
     <div id="opciones">
         <!-- Verificar si se proporciona un ID en la URL -->
         <?php if (empty($_GET['id'])): ?>

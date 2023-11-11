@@ -1,7 +1,7 @@
 <?php
+include("./nav.php");
 //Hace uso del archivo connect.php para realizar la conexion.
 require("./connect.php");
-
 //Consulta para mostrar los datos de la base de datos en una tabla.
 try {
     $consulta = $conn->prepare("SELECT * FROM productos");
@@ -22,14 +22,7 @@ try {
     <link rel="stylesheet" href="./CSS/index.css">
 </head>
 <body>
-    <header>
-        <ol>
-            <li id="fijado">Consultar listado</li>
-            <a href="./crear_producto.php"><li>Crear producto</li></a>
-            <a href="./editar_producto.php"><li>Editar producto</li></a>
-            <li>Eliminar producto</li>
-        </ol>
-    </header>
+
     <div id="contenido">
         <!--Crea una tabla para mostrar los datos-->
     <table>
