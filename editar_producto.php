@@ -1,16 +1,16 @@
 <?php
-//Incluye el archivo donde se realizan las validacion, e indica que requiere del archivo de conexion para poder ejecutarse.
+//Incluye los archivos para realizar las validaciones y conectarse a la bbdd.
 include("validacion.php");
 require("connect.php");
-//Indica el destino de las imagenes subidas.
-$destino="./img/";
+
+//Establece el directorio para almacenar las imagenes.
+$destino = "./img/";
 opendir($destino);
-$id=$_GET['id'];
+//Recibe el id del producto seleccionado.
+$id = $_GET['id'];
 
-
-//Recoge los datos del producto a modificar, y muestrael desplegable con las categorias.
-try{
-    //Consulta para las categorias.
+try {
+    //Consulta para las categorías.
     $consulta = $conn->prepare("SELECT * FROM `categorías`");
     $consulta->execute();
     $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
@@ -19,63 +19,42 @@ try{
     $consulta = $conn->prepare("SELECT * FROM `productos` WHERE id = $id");
     $consulta->execute();
     $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
-    $campos=$resultado[0];
-} catch (PDOException $e){
+    $campos = $resultado[0];
+} catch (PDOException $e) {
     echo "Error al recuperar los datos: " . $e->getMessage();
     die();
 }
 
-//Comprueba que todos los campos del formulario esten rellenados.
-    if(isset($_POST['nombre']) && isset($_POST['precio']) && !empty($_POST['categoria'])) {
+if (isset($_POST['nombre']) && isset($_POST['precio']) && !empty($_POST['categoria'])) {
+    $nombre = $_POST['nombre'];
+    $precio = $_POST['precio'];
+    $categoria = $_POST['categoria'];
 
-        //Crea las variables con los valores de cada campo del form.
-        $nombre = $_POST['nombre'];
-        $precio = $_POST['precio'];
-        $categoria = $_POST['categoria'];
+    $validacion = valida_nombre($nombre);
 
-        //Realiza las validaciones de los campos del form.
-        $validacion=valida_nombre($nombre);
-
-        //En caso de ser true la validacion, realiza las acciones indicadas.
-        if($validacion)
-        {
-            try{
-                if(isset($_FILES['imagen']['name']))
-                {
-                    //Almacena en variables el nombre y el nombre temporal de la imagen.
-                    $imagen_nombre = $_FILES['imagen']['name'];
-                    $nombre_temporal = $_FILES['imagen']['tmp_name'];
-                    //Concatena el nombre de la imagen con la ruta para usarlo en el index.php para mostrar la imagen.
-                    $ruta_imagen = $destino . $imagen_nombre;
-                    //Mueve la imagen al directorio.
-                    move_uploaded_file($nombre_temporal, $ruta_imagen);
-
-                    //Almacena en la variable la sentencia SQL a ejecutar.
-                    $sql = "UPDATE `productos` SET `Precio` = '$precio', `Categoría` = '$categoria', `Imagen` = '$ruta_imagen', `Nombre` = '$nombre' WHERE `productos`.`id` = '$id'";
-
-                    //Ejecuta la sentencia.
-                    $conn->exec($sql);
-                    //Redirige al usuario al index.php para evitar que al actualizar la página inserte de nuevo los datos almacenados en la caché-
-                    header('Location: ./index.php');                
-                }
-                else
-                {
-                    //Almacena en la variable la sentencia SQL a ejecutar.
-                    $sql = "UPDATE `productos` SET  `Nombre` = '$nombre', `Precio` = '$precio', `Categoría` = '$categoria' WHERE `productos`.`id` = '$id'";
-
-                    //Ejecuta la sentencia.
-                    $conn->exec($sql);
-                    //Redirige al usuario al index.php para evitar que al actualizar la página inserte de nuevo los datos almacenados en la caché-
-                    header('Location: ./index.php');                
-                }
+    if ($validacion) {
+        try {
+            //Comprueba si se inserto una imagen en el formulario y actualiza la imagen del producto.
+            if (isset($_FILES['imagen']['name']) && !empty($_FILES['imagen']['name'])) {
+                $imagen_nombre = $_FILES['imagen']['name'];
+                $nombre_temporal = $_FILES['imagen']['tmp_name'];
+                $ruta_imagen = $destino . $imagen_nombre;
+                move_uploaded_file($nombre_temporal, $ruta_imagen);
+                $sql = "UPDATE `productos` SET `Precio` = '$precio', `Categoría` = '$categoria', `Imagen` = '$ruta_imagen', `Nombre` = '$nombre' WHERE `productos`.`id` = '$id'";
+            } else {
+                // Si no se proporciona una nueva imagen, mantener la imagen actual en la base de datos
+                $sql = "UPDATE `productos` SET  `Nombre` = '$nombre', `Precio` = '$precio', `Categoría` = '$categoria' WHERE `productos`.`id` = '$id'";
             }
-            catch(PDOException $e){
-                //En caso de fallo muestra el error.
-                echo $sql . "<br>" . $e -> getMessage();
-            }
+
+            $conn->exec($sql);
+            header('Location: ./index.php');
+        } catch (PDOException $e) {
+            echo $sql . "<br>" . $e->getMessage();
         }
     }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
