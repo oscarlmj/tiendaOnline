@@ -30,7 +30,7 @@ try{
         $imagen_temporal = $_FILES['imagen']['tmp_name'];
 
         //Realiza las validaciones de los campos del form.
-        $validacion=valida_nombre($nombre);
+        $validacion=valida_nombre($nombre) && valida_precio($precio);
 
         //En caso de ser true la validacion, realiza las acciones indicadas.
         if($validacion)
