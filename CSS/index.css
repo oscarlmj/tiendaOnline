@@ -19,7 +19,6 @@ header ol li{
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #A4A4AD;
 }
 
 header li:hover{
@@ -40,6 +39,7 @@ header{
     background-color: #272735;
     height: 100px;
     border-bottom: 2px solid #474759;
+    align-items: center;
 }
 
 header li{
@@ -107,4 +107,12 @@ th{
 
 table{
     border-spacing: 30px;
+}
+
+a input{
+width: 45px;
+}
+
+a{
+    justify-self: end;
 }
