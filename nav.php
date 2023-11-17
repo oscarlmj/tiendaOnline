@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $current_url = $_SERVER['REQUEST_URI'];
 $url=explode("/", $current_url);
 ?>
@@ -20,6 +20,7 @@ $url=explode("/", $current_url);
             <a href="editar_producto.php" class="<?php echo ($url[2] == '/editar_producto.php') ? 'seleccionado' : ''; ?>"><li>Editar producto</li></a>
             <a href="eliminar_producto.php" class="<?php echo ($url[2] == '/eliminar_producto.php') ? 'seleccionado' : ''; ?>"><li>Eliminar producto</li></a>
         </ol>
+        <a href="./close.php"><input type="image" src="./img/close.png" alt="close" id="close"></a>
     </header>
 </body>
 </html>
