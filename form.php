@@ -1,16 +1,14 @@
 <?php
 include("./connect.php");
-
-session_start();
-
-
 try{
     if(isset($_POST['name']) && isset($_POST['correo']) && isset($_POST['psw']))
     {
         $name=$_POST['name'];
         $usuario=$_POST['correo'];
+
+        session_start();
         $_SESSION['usuario']=$usuario;
-    
+
         $sql = $conn->prepare("SELECT contrasena_hash FROM usuarios WHERE nombre ='$name'");
         $sql->execute();
         $consulta=$sql->fetch(PDO::FETCH_ASSOC);

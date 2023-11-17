@@ -1,22 +1,32 @@
 <?php
 include("nav.php");
+
 //Incluye el archivo donde se realizan las validacion, e indica que requiere del archivo de conexion para poder ejecutarse.
 include("validacion.php");
 require("connect.php");
+
 //Indica el destino de las imagenes subidas.
 $destino="./img/";
 opendir($destino);
 
-try{
-    $consulta = $conn->prepare("SELECT * FROM `categorías`");
-    $consulta->execute();
-    $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e){
-    echo "Error al recuperar los datos: " . $e->getMessage();
-    die();
+if(!isset($_SESSION['usuario']))
+{
+    $nombre_archivo = basename(__FILE__);
+    header('Location: ./form_login.php?archivo=' . urlencode($nombre_archivo));
+    exit();
 }
+else
+{
+    try{
+        $consulta = $conn->prepare("SELECT * FROM `categorías`");
+        $consulta->execute();
+        $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e){
+        echo "Error al recuperar los datos: " . $e->getMessage();
+        die();
+    }
 
-//Comprueba que todos los campos del formulario esten rellenados.
+    //Comprueba que todos los campos del formulario esten rellenados.
     if(isset($_POST['nombre']) && isset($_POST['precio']) && isset($_FILES['imagen']['name']) && !empty($_POST['categoria'])) {
 
         //Crea las variables con los valores de cada campo del form.
@@ -36,7 +46,6 @@ try{
         if($validacion)
         {
             try{
-
                 $ruta_imagen = $destino . $imagen_nombre;
                 //Almacena en la variable la sentencia SQL a ejecutar.
                 $sql = "INSERT INTO productos (Nombre, Precio, Imagen, Categoría) VALUES ('$nombre', '$precio', '$imagen', '$categoria')";
@@ -54,6 +63,7 @@ try{
             }
         }
     }
+}
 ?>
 
 <!DOCTYPE html>

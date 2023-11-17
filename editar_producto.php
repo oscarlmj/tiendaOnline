@@ -7,67 +7,73 @@ require("connect.php");
 //Establece el directorio para almacenar las imagenes.
 $destino = "./img/";
 opendir($destino);
-//Recibe el id del producto seleccionado.
 
-//Ejecuta el codigo si el GET no esta vacio, es decir, haz seleccionado algun objeto en el index.php.
-if(!empty($_GET))
+if(!isset($_SESSION['usuario']))
 {
-    //Almacena el id en una variable.
-    $id = $_GET['id'];
-
-    try {
-        //Consulta para las categorías.
-        $consulta = $conn->prepare("SELECT * FROM `categorías`");
-        $consulta->execute();
-        $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+    header('Location: ./form_login.php');
+    exit();
+}
+else
+{
+    if(!empty($_GET))
+    {
+        //Almacena el id en una variable.
+        $id = $_GET['id'];
     
-        //Consulta para mostrar los datos del producto.
-        $consulta = $conn->prepare("SELECT * FROM `productos` WHERE id = $id");
-        $consulta->execute();
-        $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
-        $campos = $resultado[0];
-
+        try {
+            //Consulta para las categorías.
+            $consulta = $conn->prepare("SELECT * FROM `categorías`");
+            $consulta->execute();
+            $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
         
-    } catch (PDOException $e) {
-        echo "Error al recuperar los datos: " . $e->getMessage();
-        die();
-    }
+            //Consulta para mostrar los datos del producto.
+            $consulta = $conn->prepare("SELECT * FROM `productos` WHERE id = $id");
+            $consulta->execute();
+            $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            $campos = $resultado[0];
     
-    if (isset($_POST['nombre']) && isset($_POST['precio']) && !empty($_POST['categoria'])) {
-        //Almacena los valores del form en sus respectivas variables.
-        $nombre = $_POST['nombre'];
-        $precio = $_POST['precio'];
-        $categoria = $_POST['categoria'];
+            
+        } catch (PDOException $e) {
+            echo "Error al recuperar los datos: " . $e->getMessage();
+            die();
+        }
+        
+        if (isset($_POST['nombre']) && isset($_POST['precio']) && !empty($_POST['categoria'])) {
+            //Almacena los valores del form en sus respectivas variables.
+            $nombre = $_POST['nombre'];
+            $precio = $_POST['precio'];
+            $categoria = $_POST['categoria'];
+        
+            //Realiza la validacion de los camppos.
+            $validacion = valida_nombre($nombre);
+        
+            //En caso de validacion correcta, ejecuta el programa.
+            if ($validacion) {
+                try {
+                    //Comprueba si se inserto una imagen en el formulario y actualiza la imagen del producto.
+                    if (isset($_FILES['imagen']['name']) && !empty($_FILES['imagen']['name'])) {
+                        $imagen_nombre = $_FILES['imagen']['name'];
+                        $nombre_temporal = $_FILES['imagen']['tmp_name'];
+                        $ruta_imagen = $destino . $imagen_nombre;
     
-        //Realiza la validacion de los camppos.
-        $validacion = valida_nombre($nombre);
+                        //Mueve la imagen al directorio.
+                        move_uploaded_file($nombre_temporal, $ruta_imagen);
     
-        //En caso de validacion correcta, ejecuta el programa.
-        if ($validacion) {
-            try {
-                //Comprueba si se inserto una imagen en el formulario y actualiza la imagen del producto.
-                if (isset($_FILES['imagen']['name']) && !empty($_FILES['imagen']['name'])) {
-                    $imagen_nombre = $_FILES['imagen']['name'];
-                    $nombre_temporal = $_FILES['imagen']['tmp_name'];
-                    $ruta_imagen = $destino . $imagen_nombre;
-
-                    //Mueve la imagen al directorio.
-                    move_uploaded_file($nombre_temporal, $ruta_imagen);
-
-                    //Ejecuta la sentencia.
-                    $sql = "UPDATE `productos` SET `Precio` = '$precio', `Categoría` = '$categoria', `Imagen` = '$ruta_imagen', `Nombre` = '$nombre' WHERE `productos`.`id` = '$id'";
-                } else {
-                    // Si no se proporciona una nueva imagen, mantener la imagen actual en la base de datos
-                    $sql = "UPDATE `productos` SET  `Nombre` = '$nombre', `Precio` = '$precio', `Categoría` = '$categoria' WHERE `productos`.`id` = '$id'";
+                        //Ejecuta la sentencia.
+                        $sql = "UPDATE `productos` SET `Precio` = '$precio', `Categoría` = '$categoria', `Imagen` = '$ruta_imagen', `Nombre` = '$nombre' WHERE `productos`.`id` = '$id'";
+                    } else {
+                        // Si no se proporciona una nueva imagen, mantener la imagen actual en la base de datos
+                        $sql = "UPDATE `productos` SET  `Nombre` = '$nombre', `Precio` = '$precio', `Categoría` = '$categoria' WHERE `productos`.`id` = '$id'";
+                    }
+    
+                    $conn->exec($sql);
+    
+                    //Redirige al usuario al index.php, para evitar que al refrescar la pagina inserte de nuevo los datos en la BBDD, ya que se almacenan en la caché.
+                    header('Location: ./listar_productos.php');
                 }
-
-                $conn->exec($sql);
-
-                //Redirige al usuario al index.php, para evitar que al refrescar la pagina inserte de nuevo los datos en la BBDD, ya que se almacenan en la caché.
-                header('Location: ./listar_productos.php');
-            }
-            catch (PDOException $e) {
-                echo $sql . "<br>" . $e->getMessage();
+                catch (PDOException $e) {
+                    echo $sql . "<br>" . $e->getMessage();
+                }
             }
         }
     }
@@ -79,7 +85,7 @@ if(!empty($_GET))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BBDD Mi tienda Online</title>
+    <title>Editar producto</title>
     <link rel="stylesheet" href="./CSS/index.css">
 </head>
 <body>
