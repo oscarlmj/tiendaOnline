@@ -36,7 +36,6 @@ else
         $categoria = $_POST['categoria'];
 
         //Almacena en variables el nombre y el nombre temporal de la imagen.
-        $imagen_nombre = $_FILES['imagen']['name'];
         $imagen_temporal = $_FILES['imagen']['tmp_name'];
 
         //Realiza las validaciones de los campos del form.
@@ -46,14 +45,14 @@ else
         if($validacion)
         {
             try{
-                $ruta_imagen = $destino . $imagen_nombre;
                 //Almacena en la variable la sentencia SQL a ejecutar.
                 $sql = "INSERT INTO productos (Nombre, Precio, Imagen, Categoría) VALUES ('$nombre', '$precio', '$imagen', '$categoria')";
                 //Realiza la sentencia.
                 $conn->exec($sql);
 
                 //Mueve la imagen al directorio.
-                move_uploaded_file($imagen_temporal, $destino . $imagen_nombre);                
+                move_uploaded_file($imagen_temporal,$imagen);
+
                 //En caso de inserción, redirige al usuario a la pagina principal donde vera el producto añadido.
                 header('Location: ./listar_productos.php');
             }
