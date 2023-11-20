@@ -26,7 +26,7 @@
                     Contraseña
                     <input type="password" name="psw">
                 </label>
-                <input type="submit">
+                <input type="submit" id="env">
             </fieldset>
         </form>
     </div>

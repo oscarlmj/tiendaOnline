@@ -1,7 +1,5 @@
 <?php
 session_start();
-$current_url = $_SERVER['REQUEST_URI'];
-$url=explode("/", $current_url);
 ?>
 
 <!DOCTYPE html>
