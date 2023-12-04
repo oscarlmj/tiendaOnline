@@ -3,9 +3,7 @@ include("./nav.php");
 //Hace uso del archivo connect.php para realizar la conexion.
 require("./connect.php");
 
-if(!empty($_SESSION['usuario']))
-{
-//Consulta para mostrar los datos de la base de datos en una tabla.
+
 try {
     $consulta = $conn->prepare("SELECT * FROM productos");
     $consulta->execute();
@@ -14,11 +12,7 @@ try {
     echo "Error al recuperar los datos: " . $e->getMessage();
     die();
 }
-}
-else
-{
-    header('Location: ./form_login.php');
-}
+
 
 ?>
 

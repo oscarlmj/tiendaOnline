@@ -8,13 +8,7 @@ require("connect.php");
 $destino = "./img/";
 opendir($destino);
 
-if(!isset($_SESSION['usuario']))
-{
-    header('Location: ./form_login.php');
-    exit();
-}
-else
-{
+
     if(!empty($_GET))
     {
         //Almacena el id en una variable.
@@ -77,7 +71,7 @@ else
             }
         }
     }
-}
+
 ?>
 
 <!DOCTYPE html>

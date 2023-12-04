@@ -9,14 +9,7 @@ require("connect.php");
 $destino="./img/";
 opendir($destino);
 
-if(!isset($_SESSION['usuario']))
-{
-    $nombre_archivo = basename(__FILE__);
-    header('Location: ./form_login.php?archivo=' . urlencode($nombre_archivo));
-    exit();
-}
-else
-{
+
     try{
         $consulta = $conn->prepare("SELECT * FROM `categorías`");
         $consulta->execute();
@@ -63,7 +56,6 @@ else
             }
         }
     }
-}
 ?>
 
 <!DOCTYPE html>

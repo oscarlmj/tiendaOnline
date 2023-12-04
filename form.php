@@ -1,5 +1,6 @@
 <?php
 include("./connect.php");
+
 try{
     if(isset($_POST['name']) && isset($_POST['correo']) && isset($_POST['psw']))
     {

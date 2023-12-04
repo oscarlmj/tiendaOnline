@@ -1,5 +1,12 @@
 <?php
 session_start();
+
+if(empty($_SESSION['usuario']))
+{
+    header('Location: ./form_login.php');
+    exit();
+}
+
 ?>
 
 <!DOCTYPE html>
